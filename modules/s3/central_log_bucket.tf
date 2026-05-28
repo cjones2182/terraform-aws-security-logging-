@@ -35,47 +35,39 @@ resource "aws_s3_bucket_public_access_block" "central_log_bucket_public_access_b
 }
 
 # bucket sse 
-resource "aws_s3_bucket_server_side_encryption_configuration" "central_log_bucket_sse" {
- bucket = aws_s3_bucket.central_log_bucket281330.id
-rule {
-  apply_server_side_encryption_by_default {
-    sse_algorithm = "AES256"
-
-   }
- }
-}
 resource "aws_s3_bucket_policy" "access_logs_bucket_policy" {
- bucket =  aws_s3_bucket.central_log_bucket281330.id
+  bucket = aws_s3_bucket.central_log_bucket281330.id
 
- policy = jsonencode({
-    "Version": "2012-10-17"
+  policy = jsonencode({
+    Version = "2012-10-17"
 
-   "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "logdelivery.elasticloadbalancing.amazonaws.com"
-      },
-      "Action": "s3:PutObject"
-      "Resource": "${aws_s3_bucket.central_log_bucket281330.arn}/*"
-    }]
-
-    "Statement" : [
+    Statement = [
       {
-        "Effect": "Allow"
-        "Principal": {
-          "Service": "cloudtrail.amazon.aws.com"
+        Effect = "Allow"
+        Principal = {
+          Service = "logdelivery.elasticloadbalancing.amazonaws.com"
         }
-        "Action": "s3:PutObject"
-        "Resource": "${aws_s3_bucket.central_log_bucket281330.arn}/*"
-      }]
-    "Statement": [{
-    "Effect": "Allow"
-    "Principal": {
-      "Service": "vpc-flow-logs.amazon.aws.com"
-    }
-    "Action": "s3:PutObject"
-    "Resource": "${aws_s3_bucket.central_log_bucket281330.arn}/*"
-      }]
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.central_log_bucket281330.arn}/*"
+      },
+
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.central_log_bucket281330.arn}/*"
+      },
+
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        }
+        Action   = "s3:PutObject"
+        Resource = "${aws_s3_bucket.central_log_bucket281330.arn}/*"
+      }
+    ]
   })
 }
