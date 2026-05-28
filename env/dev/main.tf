@@ -2,14 +2,15 @@
 # vpc 
 # =================
 module "vpc" {
-  source                  = "../../modules/vpc"
-  vpc_cidr_block          = var.vpc_cidr_block
-  public_subnets          = var.public_subnets
-  availability_zones      = var.availability_zones
-  private_subnets         = var.private_subnets
-  database_subnets        = var.database_subnets
-  environment             = var.environment
-  endpoint_security_group = module.security-groups.endpoint_security_group
+  source                   = "../../modules/vpc"
+  vpc_cidr_block           = var.vpc_cidr_block
+  public_subnets           = var.public_subnets
+  availability_zones       = var.availability_zones
+  private_subnets          = var.private_subnets
+  database_subnets         = var.database_subnets
+  environment              = var.environment
+  endpoint_security_group  = module.security-groups.endpoint_security_group
+  central_log_bucket281330 = module.s3.central_log_bucket281330
 }
 module "security-groups" {
   source      = "../../modules/security-groups"

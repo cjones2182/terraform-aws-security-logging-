@@ -28,4 +28,8 @@ variable "endpoint_security_group" {
   description = "endpoint security group"
   type = string
 }
+variable "central_log_bucket281330" {
+  description = "log bucket"
+  type = string
+}
 
