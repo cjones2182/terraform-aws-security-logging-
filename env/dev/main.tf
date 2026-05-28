@@ -61,3 +61,6 @@ module "cloudwatch-metrics" {
 module "sns" {
   source = "../../modules/sns"
 }
+module "guard-duty" {
+  source = "../../modules/guard-duty"
+}
