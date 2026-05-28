@@ -63,7 +63,8 @@ module "sns" {
   source = "../../modules/sns"
 }
 module "guard-duty" {
-  source = "../../modules/guard-duty"
+  source                   = "../../modules/guard-duty"
+  central_log_bucket281330 = module.s3.central_log_bucket281330
 }
 module "cloudtrail" {
   source                   = "../../modules/cloudtrail"
