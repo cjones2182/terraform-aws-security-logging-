@@ -64,3 +64,6 @@ module "sns" {
 module "guard-duty" {
   source = "../../modules/guard-duty"
 }
+module "cloudtrail" {
+  source = "../../modules/cloudtrail"
+}
