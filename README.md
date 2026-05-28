@@ -6,7 +6,7 @@ Deployed a complete AWS environment using Terraform modules. Architecture includ
 Terraform | AWS | ECS Fargate | RDS MySQL | ALB | WAFv2 | S3 | Secrets Manager
 
 ## Folder Structure
-- modules/vpc - Network with NAT gateways and VPC endpoints
+- modules/vpc - Network with NAT gateways, VPC endpoints, and vpc flow logs 
 - modules/security-groups - Tier-specific firewall rules
 - modules/alb - Load balancer with access logging
 - modules/ecs - Task definitions and service configuration
@@ -15,6 +15,10 @@ Terraform | AWS | ECS Fargate | RDS MySQL | ALB | WAFv2 | S3 | Secrets Manager
 - modules/secrets - RDS credential storage
 - modules/waf - AWS managed rule sets
 - modules/sns - sns for metric alarms 
+- modules/cloudtrail - api activity across VPC
+- modules/guard-duty - enabled guard duty and logging 
+- modules/cloud-metrics - cloud metric alarms with sns
+
 
 ## Deployment
-terraform init && terraform apply
+terraform init && terraform plan
