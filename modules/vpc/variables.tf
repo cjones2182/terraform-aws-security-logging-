@@ -32,4 +32,7 @@ variable "central_log_bucket281330" {
   description = "log bucket"
   type = string
 }
-
+variable "central_log_bucket281330_arn" {
+  description = "arn of bucket"
+  type = string
+}

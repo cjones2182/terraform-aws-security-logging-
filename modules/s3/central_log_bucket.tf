@@ -58,8 +58,23 @@ resource "aws_s3_bucket_policy" "access_logs_bucket_policy" {
         }
         Action   = "s3:PutObject"
         Resource = "${aws_s3_bucket.central_log_bucket281330.arn}/*"
+
+         Condition = {
+        StringEquals = {
+      "s3:x-amz-acl" = "bucket-owner-full-control"
+        }
+        }
       },
 
+      {
+         Effect = "Allow"
+         Principal = {
+         Service = "cloudtrail.amazonaws.com"
+        }
+         Action   = "s3:GetBucketAcl"
+         Resource = aws_s3_bucket.central_log_bucket281330.arn
+      },
+     
       {
         Effect = "Allow"
         Principal = {
