@@ -59,5 +59,16 @@ resource "aws_s3_bucket_policy" "access_logs_bucket_policy" {
       "Action": "s3:PutObject"
       "Resource": "${aws_s3_bucket.central_log_bucket281330.arn}/*"
     }]
+
+    "Statement" : [
+      {
+        "Effect": "Allow"
+        "Principal": {
+          "Service": "cloudtrail.amazon.aws.com"
+        }
+        "Action": "s3:PutObject"
+        "Resource": "${aws_s3_bucket.central_log_bucket281330.arn}/*"
+      }
+    ]
   })
 }

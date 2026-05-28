@@ -65,6 +65,6 @@ module "guard-duty" {
   source = "../../modules/guard-duty"
 }
 module "cloudtrail" {
-  source = "../../modules/cloudtrail"
+  source                   = "../../modules/cloudtrail"
   central_log_bucket281330 = module.s3.central_log_bucket281330
 }
