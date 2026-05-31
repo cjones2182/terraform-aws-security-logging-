@@ -1,24 +1,29 @@
-# Terraform AWS Infrastructure
+# terraform-aws-security-logging-centralized-bucket
 
-Deployed a complete AWS environment using Terraform modules. Architecture includes VPC with public/private/database subnets across multiple AZs, ECS Fargate cluster running 3 container instances, RDS MySQL with Multi-AZ, ALB with WAF protection and S3 access logging, Secrets Manager for credentials. Security groups follow least-privilege pattern. All infrastructure is version controlled and repeatable.
+Security logging and threat detection for the AWS stack. CloudTrail for API 
+auditing, GuardDuty for threat detection, VPC Flow Logs for network visibility. 
+All logs land in one encrypted S3 bucket.
 
-## Stack
-Terraform | AWS | ECS Fargate | RDS MySQL | ALB | WAFv2 | S3 | Secrets Manager
+## What's in here
 
-## Folder Structure
-- modules/vpc - Network with NAT gateways, VPC endpoints, and vpc flow logs 
-- modules/security-groups - Tier-specific firewall rules
-- modules/alb - Load balancer with access logging
-- modules/ecs - Task definitions and service configuration
-- modules/rds - MySQL database in private subnets
-- modules/s3 - Encrypted logging bucket
-- modules/secrets - RDS credential storage
-- modules/waf - AWS managed rule sets
-- modules/sns - sns for metric alarms 
-- modules/cloudtrail - api activity across VPC
-- modules/guard-duty - enabled guard duty and logging 
-- modules/cloud-metrics - cloud metric alarms with sns
+- CloudTrail — full API activity across the account, log file validation on
+- VPC Flow Logs — accept/reject at the ENI level
+- GuardDuty — enabled and exporting findings to S3 and CloudWatch
+- S3 — versioned, encrypted, no public access, lifecycle policies set
+- CloudWatch + SNS — alarms on GuardDuty findings and security metrics
 
+## Modules
 
-## Deployment
-terraform init && terraform plan
+- `cloudtrail` — multi-region trail, S3 delivery
+- `guard-duty` — detector, findings export
+- `vpc` — updated to include flow logs
+- `cloud-metrics` — security-focused alarms
+- `sns` — finding and alarm routing
+- `s3` — centralized logging bucket
+
+## Usage
+
+```bash
+terraform init
+terraform plan -var-file="env/dev/terraform.tfvars"
+```
